@@ -12,3 +12,4 @@
 Firmware/
 extracted/
 .test-output/
+.vendor/

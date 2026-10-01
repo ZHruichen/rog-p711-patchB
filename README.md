@@ -5,7 +5,7 @@
 > [!IMPORTANT]
 > patchB 是故障隔离方案，不是 DPI 键修复方案。刷入后左/右/中键、侧键、滚轮、移动、灯效及连接功能可恢复正常，但顶部 DPI 键会失效。
 
-本仓库不包含华硕固件、刷写程序或 DLL。脚本只处理用户自行从华硕获取的官方文件。
+本仓库不重复分发华硕固件、刷写程序或 DLL。双击脚本会直接从 ASUS 官方服务器下载指定版本，校验官方 SHA-256 后再调用其中的刷写程序。
 
 ## 适用症状
 
@@ -39,13 +39,33 @@
 
 脚本会验证完整 SHA-256、文件大小、原始补丁字节和固件内部校验。任一项目不匹配都会停止，不会尝试兼容其他版本。
 
-## 使用方法
+## 一键安装
 
-### 1. 准备官方文件
+1. 下载本仓库并解压；
+2. 双击 `run-patchB.cmd`；
+3. 脚本从 ASUS 官方服务器下载并校验更新包；
+4. 将鼠标切换到有线模式并插入 USB 线；
+5. 按提示输入 `PATCHB` 后开始刷写。
 
-从 [ASUS 官方支持页面](https://rog.asus.com/mice-mouse-pads/mice/wireless/rog-gladius-iii-wireless-aimpoint-model/helpdesk_download/) 获取对应固件更新包并解压。
+自动下载的官方包为：
 
-找到包含下列文件的 `Firmware` 目录：
+```text
+P711_FirmwareAutoUpdate_1.0.0.20.zip
+SHA-256: 88B2F60DBD56553B5407AA65176669A09DBCCE5A1C8D4CBB7C5E72BCFDCD962C
+```
+
+下载来源是 [ASUS 官方支持服务器](https://dlcdnets.asus.com/pub/ASUS/Accessory/Keyboard_Mouse/ROG_GLADIUS_III_WIRELESS_AIMPOINT/P711_FirmwareAutoUpdate_1.0.0.20.zip?model=ROG%20GLADIUS%20III%20WIRELESS%20AIMPOINT)。缓存位于仓库下的 `.vendor` 文件夹，可随时删除。
+
+刷写时必须：
+
+1. 将鼠标切换到有线模式；
+2. 使用 USB 线直接连接电脑；
+3. 保持供电，刷写完成前不要拔线；
+4. 关闭可能占用鼠标的 Armoury Crate 页面。
+
+## 离线或手动使用
+
+如果已经从 [ASUS 官方支持页面](https://rog.asus.com/mice-mouse-pads/mice/wireless/rog-gladius-iii-wireless-aimpoint-model/helpdesk_download/) 下载并解压更新包，可以把包含下列文件的 `Firmware` 文件夹拖到 `run-patchB.cmd` 上：
 
 ```text
 P711_MOUSE_V03_00_10.bin
@@ -53,23 +73,12 @@ peripheral_fwu_pro.exe
 相关 DLL
 ```
 
-### 2. 一键生成并安装
-
-最简单的方式：把 `Firmware` 文件夹拖到 `run-patchB.cmd` 上，或双击后粘贴该文件夹路径。
-
-也可以直接运行 PowerShell：
+也可以运行 PowerShell：
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install-patchB.ps1 `
   -FirmwareDirectory "C:\path\to\Firmware" -Install
 ```
-
-实际刷写前，脚本会要求输入 `PATCHB` 确认。刷写时必须：
-
-1. 将鼠标切换到有线模式；
-2. 使用 USB 线直接连接电脑；
-3. 保持供电，刷写完成前不要拔线；
-4. 关闭可能占用鼠标的 Armoury Crate 页面。
 
 只生成补丁而不刷写：
 

@@ -47,3 +47,13 @@ peripheral_fwu_pro.exe m 1A70 1A71 112 200 FF01 FF01 4 <patched-bin> CVER:n
 ```
 
 The updater and its DLL dependencies must remain in their original `Firmware` directory. They are not redistributed by this repository.
+
+## Official package acquisition
+
+The one-click wrapper downloads the unchanged ASUS package directly from `dlcdnets.asus.com` and accepts it only when its SHA-256 is:
+
+```text
+88B2F60DBD56553B5407AA65176669A09DBCCE5A1C8D4CBB7C5E72BCFDCD962C
+```
+
+The package is then extracted locally. No executable, DLL, or firmware image from that package is committed to this repository.

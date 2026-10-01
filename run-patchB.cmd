@@ -2,21 +2,18 @@
 setlocal
 title ROG P711 patchB installer
 
-if "%~1"=="" (
-    echo Enter the full path to the official Firmware folder.
-    echo You can also drag the Firmware folder onto this CMD file.
-    set /p "FW_DIR=Firmware folder: "
-) else (
-    set "FW_DIR=%~1"
-)
+if "%~1"=="" goto online
 
-if not defined FW_DIR (
-    echo No folder was provided.
-    pause
-    exit /b 2
-)
-
+set "FW_DIR=%~1"
+echo Offline mode: using the supplied ASUS Firmware folder.
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0install-patchB.ps1" -FirmwareDirectory "%FW_DIR%" -Install
+goto finished
+
+:online
+echo Online mode: downloading the verified updater package from ASUS.
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0download-and-install.ps1"
+
+:finished
 set "RESULT=%ERRORLEVEL%"
 
 echo.
