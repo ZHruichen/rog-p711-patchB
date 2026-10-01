@@ -1,0 +1,14 @@
+# ASUS firmware and updater binaries are proprietary and must not be committed.
+*.bin
+*.exe
+*.dll
+*.zip
+
+# Local captures, logs, and temporary output.
+*.log
+*.pcap
+*.pcapng
+*.tmp
+Firmware/
+extracted/
+.test-output/
